@@ -18,8 +18,7 @@ package dk.ange.octave.type.cast;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import javax.imageio.spi.ServiceRegistry;
+import java.util.ServiceLoader;
 
 import dk.ange.octave.exception.OctaveClassCastException;
 import dk.ange.octave.type.OctaveObject;
@@ -40,7 +39,7 @@ public final class Cast {
         if (casterMap == null) {
             casterMap = new HashMap<ClassPair<?, ?>, Caster<?, ?>>();
             @SuppressWarnings("rawtypes")
-            final Iterator<Caster> sp = ServiceRegistry.lookupProviders(Caster.class);
+            final Iterator<Caster> sp = ServiceLoader.load(Caster.class).iterator();
             while (sp.hasNext()) {
                 register(sp.next());
             }

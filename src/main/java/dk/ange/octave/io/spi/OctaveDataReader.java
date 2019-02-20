@@ -22,8 +22,7 @@ import java.io.BufferedReader;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import javax.imageio.spi.ServiceRegistry;
+import java.util.ServiceLoader;
 
 import dk.ange.octave.type.OctaveObject;
 
@@ -48,7 +47,7 @@ public abstract class OctaveDataReader {
             return;
         }
         readers = new HashMap<String, OctaveDataReader>();
-        final Iterator<OctaveDataReader> sp = ServiceRegistry.lookupProviders(OctaveDataReader.class);
+        final Iterator<OctaveDataReader> sp = ServiceLoader.load(OctaveDataReader.class).iterator();
         while (sp.hasNext()) {
             final OctaveDataReader odr = sp.next();
             readers.put(odr.octaveType(), odr);

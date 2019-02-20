@@ -20,8 +20,7 @@ import java.io.Writer;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import javax.imageio.spi.ServiceRegistry;
+import java.util.ServiceLoader;
 
 import dk.ange.octave.type.OctaveObject;
 
@@ -49,7 +48,7 @@ public abstract class OctaveDataWriter<T extends OctaveObject> {
         if (writers == null) {
             writers = new HashMap<Class<? extends OctaveObject>, OctaveDataWriter<?>>();
             @SuppressWarnings("rawtypes")
-            final Iterator<OctaveDataWriter> sp = ServiceRegistry.lookupProviders(OctaveDataWriter.class);
+            final Iterator<OctaveDataWriter> sp = ServiceLoader.load(OctaveDataWriter.class).iterator();
             while (sp.hasNext()) {
                 final OctaveDataWriter<?> odw = sp.next();
                 writers.put(odw.javaType(), odw);
